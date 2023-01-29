@@ -1,0 +1,7 @@
+{
+  "name": "9xbet",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
