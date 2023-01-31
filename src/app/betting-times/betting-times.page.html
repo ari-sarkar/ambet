@@ -1,0 +1,30 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-button routerLink="/tabs/home" slot="start" fill="clear" color="dark">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title>Kolkata FataFat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="list-of-bets">
+    <div class="bet-card-container" *ngFor="let bet of bettingTimeList">
+      <div class="img-div"></div>
+      <div class="name-wrapper"></div>
+      <ion-text class="name">{{bet.name}}</ion-text>
+      <div class="time">
+        <ion-icon name="time-outline"></ion-icon>
+        <ion-text>{{bet.startTime}} - </ion-text>
+        <ion-text>{{ bet.endTime}}</ion-text>
+      </div>
+      <div
+        class="play-btn"
+        [ngStyle]="{'background-color': !bet.isOpen ? 'gray' : 'white'}"
+      >
+        <ion-text (click)="play(bet)" *ngIf="bet.isOpen">Play</ion-text>
+        <ion-text *ngIf="!bet.isOpen">Closed</ion-text>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,42 @@
+$lato: "Lato", sans-serif;
+$qua: "Quantico", sans-serif;
+$sans: "Work Sans", sans-serif;
+
+img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+#wallet {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #f5f9ff;
+  border: 1px dashed #d8d8d8;
+  border-radius: 23px;
+  padding: 7px;
+  ion-text {
+    margin-left: 8px;
+    font-family: $lato;
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+.your-info {
+  text-align: center;
+  margin-top: 40px;
+  ion-text {
+    font-family: $sans;
+    font-size: 15px;
+  }
+}
+#profile-container {
+  margin-top: 40px;
+  ion-icon {
+    font-size: 23px;
+  }
+  ion-item {
+    margin-top: 20px;
+  }
+}

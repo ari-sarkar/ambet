@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button>
+        <img src="../../assets/logo.jpg" />
+        <ion-text id="heading">Results</ion-text>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        <div id="wallet">
+          <ion-icon color="success" name="wallet"></ion-icon>
+          <ion-text>₹50000</ion-text>
+        </div>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="play-history"><ion-text>Winning Numbers</ion-text></div>
+
+  <div class="wrapper" *ngFor="let win of winnings">
+    <ion-text class="date">{{win.date}}</ion-text>
+    <div class="winning-list-wrapper">
+      <div class="numbers-wrapper" *ngFor="let time of win.times">
+        <ion-text>{{time.top}}</ion-text>
+        <div></div>
+        <ion-text class="bottom">{{time.bottom}}</ion-text>
+      </div>
+    </div>
+  </div>
+</ion-content>

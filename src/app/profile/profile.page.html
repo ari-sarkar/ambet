@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button>
+        <img src="../../assets/logo.jpg" />
+        <ion-text id="heading">Profile</ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="your-info"><ion-text>Your Information</ion-text></div>
+  <div id="profile-container">
+    <ion-item>
+      <ion-avatar slot="start">
+        <img
+          alt="Silhouette of a person's head"
+          src="https://ionicframework.com/docs/img/demos/avatar.svg"
+        />
+      </ion-avatar>
+      <ion-label>Betting King</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-icon name="phone-portrait-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label>7777777777</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-icon name="wallet-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label>₹ 50000</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-icon name="ribbon-outline" color="success"></ion-icon>
+      </ion-avatar>
+      <ion-label>₹ 2000 <sup>(winning amount)</sup></ion-label>
+    </ion-item>
+  </div>
+</ion-content>

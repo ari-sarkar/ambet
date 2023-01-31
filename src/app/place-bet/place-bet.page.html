@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/betting-times">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        <div id="wallet">
+          <ion-icon color="success" name="wallet"></ion-icon>
+          <ion-text>₹50000</ion-text>
+        </div>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="bet-time">
+    <div class="left">
+      <ion-text class="kolkata">Kolkata Fatafat</ion-text>
+      <div class="bazi">
+        <ion-text class="bazi-no">Bazi 1</ion-text>
+        <ion-text class="closing">closing in :</ion-text>
+      </div>
+    </div>
+    <div id="time-wrapper">
+      <ion-icon name="hourglass-outline"></ion-icon>
+      <ion-text class="time">1 hr 30 min</ion-text>
+    </div>
+  </div>
+
+  <div id="user-input-container">
+    <div class="digit-wrapper">
+      <input
+        maxlength="1"
+        type="text"
+        placeholder="Enter Digit"
+        pattern="\d{4}"
+        [(ngModel)]="digit"
+      />
+    </div>
+    <div class="amount-wrapper">
+      <input
+        [(ngModel)]="amount"
+        type="number"
+        class="amount"
+        placeholder="Enter Amount"
+      />
+    </div>
+  </div>
+
+  <div id="add-bet">
+    <button (click)="addBets()">ADD BET</button>
+  </div>
+
+  <div class="conditional-wrapper" *ngIf="myBetLists.length > 0">
+    <div id="bet-list-container-heading">
+      <div></div>
+      <ion-text>My Bets List</ion-text>
+      <div></div>
+    </div>
+    <div id="bet-list-sub-heading">
+      <ion-text>Digit</ion-text>
+      <ion-text>Amount</ion-text>
+      <ion-text>Action</ion-text>
+    </div>
+    <div
+      class="bet-list-content-wrapper"
+      *ngFor="let bet of myBetLists; let i = index"
+    >
+      <ion-text>{{bet.digit}}</ion-text>
+      <ion-text>{{bet.amount}}</ion-text>
+      <ion-icon (click)="removeBet(i)" name="close-outline"></ion-icon>
+    </div>
+
+    <div id="play">
+      <button (click)="gotoPayment()">PLAY</button>
+    </div>
+  </div>
+</ion-content>

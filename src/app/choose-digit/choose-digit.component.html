@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        <div id="wallet">
+          <ion-icon color="success" name="wallet"></ion-icon>
+          <ion-text>₹50000</ion-text>
+        </div>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h5>Choose an option to play</h5>
+  <div class="patti" (click)="placeBet('single')">
+    <img src="../../assets/dice/one.jpg" />
+    <ion-text>Single</ion-text>
+  </div>
+  <div class="patti">
+    <img src="../../assets/dice/three.jpg" />
+    <ion-text>Patti</ion-text>
+  </div>
+</ion-content>

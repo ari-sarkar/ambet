@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button>
+        <img src="../../assets/logo.jpg" />
+        <ion-text id="heading">My Bids</ion-text>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        <div id="wallet">
+          <ion-icon color="success" name="wallet"></ion-icon>
+          <ion-text>₹50000</ion-text>
+        </div>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="play-history"><ion-text>Play History</ion-text></div>
+  <div class="radio-group">
+    <ion-radio-group [allowEmptySelection]="true" value="single">
+      <ion-item>
+        <ion-label>Single</ion-label>
+        <ion-radio slot="end" value="single"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Patti</ion-label>
+        <ion-radio slot="end" value="patti"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </div>
+
+  <div class="my-bids heading">
+    <ion-text>Date</ion-text>
+    <ion-text>Baji</ion-text>
+    <ion-text>Number</ion-text>
+    <ion-text>Amount</ion-text>
+    <ion-text>Result</ion-text>
+  </div>
+  <div class="my-bids content">
+    <ion-text>01/02/2023</ion-text>
+    <ion-text>Baji 1</ion-text>
+    <ion-text>5</ion-text>
+    <ion-text>₹ 500</ion-text>
+    <ion-text>9</ion-text>
+  </div>
+</ion-content>

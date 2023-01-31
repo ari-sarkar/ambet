@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        <div id="wallet">
+          <ion-icon color="success" name="wallet"></ion-icon>
+          <ion-text>₹50000</ion-text>
+        </div>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <div class="total-amount-wrapper">
+    <ion-text class="desc">For Payment:</ion-text>
+    <ion-text class="amount">Rs. {{ totalAmount }}</ion-text>
+  </div>
+
+  <div class="phone-no-wrapper">
+    <label>Registered Phone No</label>
+    <input value="7777777777" disabled="true" />
+  </div>
+
+  <div class="upi-wrapper">
+    <label for="upis">Payment UPI</label>
+    <select id="upis" value="phonePay">
+      <option value="phonePay">Phone Pay</option>
+      <option value="paytm">Paytm</option>
+      <option value="gPay">Google Pay</option>
+    </select>
+  </div>
+
+  <div class="info">
+    <ion-text>
+      Money will be added in your account within a business day. If you have any
+      issues please what's app on 7777777777
+    </ion-text>
+  </div>
+
+  <div class="submit" (click)="showConfirm()">
+    <button>SUBMIT</button>
+  </div>
+</ion-content>
