@@ -9,7 +9,7 @@
       <ion-button>
         <div id="wallet">
           <ion-icon color="success" name="wallet"></ion-icon>
-          <ion-text>₹50000</ion-text>
+          <ion-text>₹ {{user?.walletBalance}}</ion-text>
         </div>
       </ion-button>
     </ion-buttons>
@@ -19,9 +19,9 @@
 <ion-content [fullscreen]="true">
   <div id="bet-time">
     <div class="left">
-      <ion-text class="kolkata">Kolkata Fatafat</ion-text>
+      <ion-text class="kolkata">{{placeBetTitle?.gameName}}</ion-text>
       <div class="bazi">
-        <ion-text class="bazi-no">Bazi 1</ion-text>
+        <ion-text class="bazi-no">{{placeBetTitle?.slotName}}</ion-text>
         <ion-text class="closing">closing in :</ion-text>
       </div>
     </div>
@@ -34,7 +34,7 @@
   <div id="user-input-container">
     <div class="digit-wrapper">
       <input
-        maxlength="1"
+        [maxlength]="placeBetTitle?.patti"
         type="text"
         placeholder="Enter Digit"
         pattern="\d{4}"
@@ -75,7 +75,7 @@
       <ion-icon (click)="removeBet(i)" name="close-outline"></ion-icon>
     </div>
 
-    <div id="play">
+    <div id="play" *ngIf="myBetLists.length > 0">
       <button (click)="gotoPayment()">PLAY</button>
     </div>
   </div>

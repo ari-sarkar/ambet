@@ -9,7 +9,7 @@
       <ion-button>
         <div id="wallet">
           <ion-icon color="success" name="wallet"></ion-icon>
-          <ion-text>₹50000</ion-text>
+          <ion-text>₹ {{ user?.walletBalance }}</ion-text>
         </div>
       </ion-button>
     </ion-buttons>
@@ -23,15 +23,15 @@
   </div>
 
   <div class="phone-no-wrapper">
-    <label>Registered Phone No</label>
-    <input value="7777777777" disabled="true" />
+    <label>Phone no money sent from</label>
+    <input (input)="getInput($event)" />
   </div>
 
   <div class="upi-wrapper">
     <label for="upis">Payment UPI</label>
-    <select id="upis" value="phonePay">
+    <select (change)="gateway($event)" id="upis" value="one">
+      <option value="one">Select One</option>
       <option value="phonePay">Phone Pay</option>
-      <option value="paytm">Paytm</option>
       <option value="gPay">Google Pay</option>
     </select>
   </div>
@@ -43,7 +43,7 @@
     </ion-text>
   </div>
 
-  <div class="submit" (click)="showConfirm()">
+  <div class="submit" (click)="save()">
     <button>SUBMIT</button>
   </div>
 </ion-content>

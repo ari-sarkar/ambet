@@ -1,12 +1,14 @@
+import { AmBetsService } from './../ambets.service';
 import { WithdrawMoneyComponent } from './../withdraw-money/withdraw-money.component';
 import {
   ModalController,
   AlertController,
   ToastController,
 } from '@ionic/angular';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PaymentComponent } from '../payment/payment.component';
+import { LOCAL_STORAGE, WebStorageService } from 'ngx-webstorage-service';
 
 @Component({
   selector: 'app-home',
@@ -19,13 +21,27 @@ export class HomePage {
     // { name: 'Bombay FataFat', imgUrl: '../../assets/cards2.jpg' },
   ];
   topUpAmount: any;
+  user: any;
+  gameList: any = [];
   constructor(
     private router: Router,
     private modalCtrl: ModalController,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private route: Router,
+    private amBetsService: AmBetsService,
+    @Inject(LOCAL_STORAGE) private storage: WebStorageService,
   ) {
-    //this.router.url;
+    this.getUserDetails();
+    this.getAllGames();
+  }
+
+  getUserDetails() {
+    this.amBetsService.getUserByNo(0, 10, this.storage.get("phnNo")).subscribe(res => {
+      this.storage.set('user', res.user[0]);
+      this.user = res.user[0];
+    },
+      err => { console.log(err) })
   }
 
   async presentAlert() {
@@ -42,7 +58,7 @@ export class HomePage {
 
     await alert.present();
     const { data } = await alert.onDidDismiss();
-    if (data.values[0] >= 50) {
+    if (data.values[0] >= 5) {
       this.topUpAmount = data.values[0];
       //console.log(this.topUpAmount);
       this.gotoPayment();
@@ -54,7 +70,7 @@ export class HomePage {
   async gotoPayment() {
     const modal = await this.modalCtrl.create({
       component: PaymentComponent,
-      componentProps: { bettingList: [{ amount: parseInt(this.topUpAmount) }] },
+      componentProps: { bettingList: [{ amount: parseInt(this.topUpAmount), type: "plus" }] },
     });
     modal.present();
 
@@ -86,5 +102,25 @@ export class HomePage {
     });
 
     await toast.present();
+  }
+
+  getAllGames() {
+    this.amBetsService.getAllGames().subscribe(res => {
+      if (res.data.length)
+        res.data.map((e: any, i: number) => {
+          if (!e.name) {
+            res.data.splice(i, 1);
+          }
+        })
+      this.gameList = res.data;
+      console.log(res)
+    }, err => console.log(err))
+  }
+
+  navigate(bet: any) {
+    console.log(bet);
+    this.storage.set('gameId', bet.id);
+    this.storage.set('gameName', bet.name);
+    this.route.navigateByUrl("/betting-times");
   }
 }

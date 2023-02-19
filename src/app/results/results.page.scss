@@ -40,7 +40,7 @@ img {
   }
   .winning-list-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     margin-top: 8px;
     .numbers-wrapper {
@@ -53,6 +53,7 @@ img {
       background-color: #e6e6e6;
       font-size: 11px;
       width: 35px;
+      margin-left: 8px;
       div {
         height: 1px;
         background-color: #b7b7b7;

@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'place-bet',
     loadChildren: () => import('./place-bet/place-bet.module').then( m => m.PlaceBetPageModule)
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
 ];
 @NgModule({
   imports: [

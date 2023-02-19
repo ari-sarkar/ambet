@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { LOCAL_STORAGE, WebStorageService } from 'ngx-webstorage-service';
 
 @Component({
   selector: 'app-choose-digit',
@@ -8,9 +9,13 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./choose-digit.component.scss'],
 })
 export class ChooseDigitComponent implements OnInit {
-  constructor(private modalCtrl: ModalController, private router: Router) {}
+  constructor(
+    private modalCtrl: ModalController,
+    private router: Router,
+    @Inject(LOCAL_STORAGE) private storage: WebStorageService,
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
@@ -20,6 +25,7 @@ export class ChooseDigitComponent implements OnInit {
   }
 
   placeBet(digit: string) {
+    this.storage.set('patti', digit);
     this.cancel();
     this.router.navigateByUrl('/place-bet');
   }

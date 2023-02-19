@@ -9,7 +9,7 @@
       <ion-button>
         <div id="wallet">
           <ion-icon color="success" name="wallet"></ion-icon>
-          <ion-text>₹50000</ion-text>
+          <ion-text>₹ {{ user?.walletBalance }}</ion-text>
         </div>
       </ion-button>
     </ion-buttons>
@@ -19,19 +19,19 @@
 <ion-content fullscreen="true">
   <div class="total-amount-wrapper">
     <label>Enter Amount to withdraw</label>
-    <input type="number" value="50" />
+    <input (input)="amtChnage($event)" type="number" />
   </div>
 
   <div class="phone-no-wrapper">
-    <label>Registered Phone No</label>
-    <input value="7777777777" disabled="true" />
+    <label>Enter Phone no to receive money</label>
+    <input (input)="noChange($event)" />
   </div>
 
   <div class="upi-wrapper">
     <label for="upis">Payment UPI</label>
-    <select id="upis" value="phonePay">
+    <select (change)="gChnage($event)" id="upis">
+      <option value="one">Select One</option>
       <option value="phonePay">Phone Pay</option>
-      <option value="paytm">Paytm</option>
       <option value="gPay">Google Pay</option>
     </select>
   </div>
@@ -43,7 +43,7 @@
     </ion-text>
   </div>
 
-  <div class="submit" (click)="showConfirm()">
-    <button>SUBMIT</button>
+  <div class="submit" (click)="save()">
+    <button *ngIf="enableBtn">SUBMIT</button>
   </div>
 </ion-content>

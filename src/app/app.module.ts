@@ -1,3 +1,4 @@
+import { AmBetsService } from './ambets.service';
 import { WithdrawMoneyComponent } from './withdraw-money/withdraw-money.component';
 import { PaymentComponent } from './payment/payment.component';
 import { ChooseDigitComponent } from './choose-digit/choose-digit.component';
@@ -9,6 +10,8 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { StorageServiceModule, LOCAL_STORAGE } from 'ngx-webstorage-service';
 
 @NgModule({
   declarations: [
@@ -17,8 +20,12 @@ import { AppComponent } from './app.component';
     PaymentComponent,
     WithdrawMoneyComponent,
   ],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, HttpClient, AmBetsService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

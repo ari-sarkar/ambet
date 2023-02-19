@@ -19,25 +19,25 @@
           src="https://ionicframework.com/docs/img/demos/avatar.svg"
         />
       </ion-avatar>
-      <ion-label>Betting King</ion-label>
+      <ion-label>{{user?.name}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-avatar slot="start">
         <ion-icon name="phone-portrait-outline"></ion-icon>
       </ion-avatar>
-      <ion-label>7777777777</ion-label>
+      <ion-label>{{user?.phoneNo}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-avatar slot="start">
         <ion-icon name="wallet-outline"></ion-icon>
       </ion-avatar>
-      <ion-label>₹ 50000</ion-label>
+      <ion-label>₹ {{user?.walletBalance}}</ion-label>
     </ion-item>
-    <ion-item>
+    <!-- <ion-item>
       <ion-avatar slot="start">
         <ion-icon name="ribbon-outline" color="success"></ion-icon>
       </ion-avatar>
-      <ion-label>₹ 2000 <sup>(winning amount)</sup></ion-label>
-    </ion-item>
+      <ion-label>₹ {{user?.name}} <sup>(winning amount)</sup></ion-label>
+    </ion-item> -->
   </div>
 </ion-content>

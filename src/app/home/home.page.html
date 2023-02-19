@@ -10,7 +10,7 @@
       <ion-button>
         <div id="wallet">
           <ion-icon color="success" name="wallet"></ion-icon>
-          <ion-text>₹50000</ion-text>
+          <ion-text>₹ {{user?.walletBalance}}</ion-text>
         </div>
       </ion-button>
     </ion-buttons>
@@ -39,12 +39,12 @@
   <!--? for wallet -->
 
   <div id="list-of-bets">
-    <div class="bet-card-container" *ngFor="let bet of betList">
+    <div class="bet-card-container" *ngFor="let bet of gameList">
       <div class="bet-img-wrapper">
-        <img [src]="bet.imgUrl" />
+        <img [src]="bet.imageUrl" />
         <ion-text>{{bet.name}}</ion-text>
       </div>
-      <div class="play-btn" routerLink="/betting-times">
+      <div (click)="navigate(bet)" class="play-btn">
         <ion-text>Play Now</ion-text>
         <ion-icon color="dark" name="chevron-forward-circle"></ion-icon>
       </div>

@@ -20,10 +20,12 @@
       </div>
       <div
         class="play-btn"
-        [ngStyle]="{'background-color': !bet.isOpen ? 'gray' : 'white'}"
+        [ngStyle]="{'background-color': bet.status !== 'open' ? 'gray' : 'white'}"
       >
-        <ion-text (click)="play(bet)" *ngIf="bet.isOpen">Play</ion-text>
-        <ion-text *ngIf="!bet.isOpen">Closed</ion-text>
+        <ion-text (click)="play(bet)" *ngIf="bet.status === 'open'"
+          >Play</ion-text
+        >
+        <ion-text *ngIf="bet.status !== 'open'">{{bet.status}}</ion-text>
       </div>
     </div>
   </div>

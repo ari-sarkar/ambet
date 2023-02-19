@@ -1,0 +1,44 @@
+<ion-content>
+  <div id="container">
+    <div id="image_wrapper">
+      <img src="../../assets/logo.jpg" alt="logo" />
+      <ion-text id="app-name"
+        >am<br /><span style="font-size: 50px">bet</span>
+      </ion-text>
+    </div>
+
+    <div id="inputs">
+      <ion-item class="ion-padding-start ion-padding-end">
+        <ion-input
+          [(ngModel)]="no"
+          type="number"
+          placeholder="Phone number"
+          minlength="10"
+          (input)="passChange()"
+        ></ion-input>
+      </ion-item>
+      <ion-item class="ion-padding-start ion-padding-end">
+        <ion-input [(ngModel)]="name" placeholder="Full Name"></ion-input>
+      </ion-item>
+      <ion-item class="ion-padding-start ion-padding-end">
+        <ion-input
+          type="password"
+          [(ngModel)]="password"
+          placeholder="Password"
+        ></ion-input>
+      </ion-item>
+      <ion-item class="ion-padding-start ion-padding-end">
+        <ion-input
+          [(ngModel)]="passwordRepeat"
+          [required]="true"
+          placeholder="Confirm Password"
+          (input)="passChange()"
+          type="password"
+        ></ion-input>
+      </ion-item>
+    </div>
+    <div id="register">
+      <ion-button (click)="save()" [disabled]="!isFormOk">Register</ion-button>
+    </div>
+  </div>
+</ion-content>

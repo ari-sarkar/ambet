@@ -10,7 +10,7 @@
       <ion-button>
         <div id="wallet">
           <ion-icon color="success" name="wallet"></ion-icon>
-          <ion-text>₹50000</ion-text>
+          <ion-text>₹ {{user?.walletBalance}}</ion-text>
         </div>
       </ion-button>
     </ion-buttons>
@@ -18,15 +18,30 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="play-history"><ion-text>Winning Numbers</ion-text></div>
+  <ion-list>
+    <ion-item>
+      <ion-select
+        (ionChange)="selectGame($event)"
+        interface="action-sheet"
+        placeholder="Select Game"
+      >
+        <ion-select-option *ngFor="let g of gameList" [value]="g"
+          >{{g.name}}</ion-select-option
+        >
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <div *ngIf="!hide" class="play-history">
+    <ion-text>Winning Numbers</ion-text>
+  </div>
 
-  <div class="wrapper" *ngFor="let win of winnings">
-    <ion-text class="date">{{win.date}}</ion-text>
+  <div class="wrapper" *ngIf="winningsOne.length > 0">
+    <ion-text class="date">{{winningsOne[0].date}}</ion-text>
     <div class="winning-list-wrapper">
-      <div class="numbers-wrapper" *ngFor="let time of win.times">
-        <ion-text>{{time.top}}</ion-text>
+      <div class="numbers-wrapper" *ngFor="let win of winningsOne">
+        <ion-text>{{win.single}}</ion-text>
         <div></div>
-        <ion-text class="bottom">{{time.bottom}}</ion-text>
+        <ion-text class="bottom">{{win.triple}}</ion-text>
       </div>
     </div>
   </div>
