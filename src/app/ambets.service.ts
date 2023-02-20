@@ -8,7 +8,7 @@ export class AmBetsService {
   API_END_POINT: string;
 
   constructor(private httpClient: HttpClient) {
-    this.API_END_POINT = 'http://localhost:8080/v1';
+    this.API_END_POINT = 'https://ambet.in:8080/v1';
   }
 
   public handleError(error: any) {
