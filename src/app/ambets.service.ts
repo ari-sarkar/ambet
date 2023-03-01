@@ -8,7 +8,7 @@ export class AmBetsService {
   API_END_POINT: string;
 
   constructor(private httpClient: HttpClient) {
-    this.API_END_POINT = 'https://ambet.in:8080/v1';
+    this.API_END_POINT = 'https://api.ambet.in/v1';
   }
 
   public handleError(error: any) {
@@ -177,13 +177,14 @@ export class AmBetsService {
       );
   }
 
-  getBetsByUserId(page: number, size: number, user: string, gameId: string): Observable<any> {
+  getBetsByUserId(page: number, size: number, user: string, gameId: string, type: string): Observable<any> {
     const headers = new HttpHeaders();
     let params = new HttpParams();
     params = params.append('page', page);
     params = params.append('size', size);
     params = params.append('user', user);
     params = params.append('gameId', gameId);
+    params = params.append('type', type);
     return this.httpClient
       .get(`${this.API_END_POINT}/my-bids/get`, {
         params,
@@ -260,6 +261,28 @@ export class AmBetsService {
     params = params.append('id', id);
     return this.httpClient
       .get(`${this.API_END_POINT}/slots/get`, { params })
+      .pipe(
+        map((res: any) => res),
+        catchError((error: any) => {
+          return throwError(this.handleError(error));
+        })
+      );
+  }
+
+  getAdminNo(): Observable<any> {
+    return this.httpClient
+      .get(`${this.API_END_POINT}/admin-numbers/get`)
+      .pipe(
+        map((res: any) => res),
+        catchError((error: any) => {
+          return throwError(this.handleError(error));
+        })
+      );
+  }
+
+  getAllByUrl(url: string): Observable<any> {
+    return this.httpClient
+      .get(`${this.API_END_POINT}${url}`)
       .pipe(
         map((res: any) => res),
         catchError((error: any) => {

@@ -1,12 +1,14 @@
+import { finalize } from 'rxjs';
 import { AmBetsService } from './../ambets.service';
 import { WithdrawMoneyComponent } from './../withdraw-money/withdraw-money.component';
 import {
   ModalController,
   AlertController,
   ToastController,
+  LoadingController,
 } from '@ionic/angular';
-import { Component, Inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PaymentComponent } from '../payment/payment.component';
 import { LOCAL_STORAGE, WebStorageService } from 'ngx-webstorage-service';
 
@@ -15,7 +17,7 @@ import { LOCAL_STORAGE, WebStorageService } from 'ngx-webstorage-service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   betList: any = [
     { name: 'Kolkata FataFat', imgUrl: '../../assets/cards.jpg' },
     // { name: 'Bombay FataFat', imgUrl: '../../assets/cards2.jpg' },
@@ -23,6 +25,7 @@ export class HomePage {
   topUpAmount: any;
   user: any;
   gameList: any = [];
+  adminNo: any;
   constructor(
     private router: Router,
     private modalCtrl: ModalController,
@@ -30,10 +33,32 @@ export class HomePage {
     private toastController: ToastController,
     private route: Router,
     private amBetsService: AmBetsService,
+    private loadingCtrl: LoadingController,
     @Inject(LOCAL_STORAGE) private storage: WebStorageService,
+    private activatedRoute: ActivatedRoute
   ) {
-    this.getUserDetails();
-    this.getAllGames();
+
+  }
+
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(() => {
+      this.getAllGames();
+      this.getUserDetails();
+      this.getAdminNo();
+    })
+  }
+
+  logout() {
+    this.storage.clear();
+    this.route.navigateByUrl("/");
+  }
+
+  getAdminNo() {
+    this.amBetsService.getAdminNo().subscribe(res => {
+      console.log(res);
+      this.adminNo = res.data[0];
+      this.storage.set("admin", this.adminNo);
+    }, err => window.alert(err.message))
   }
 
   getUserDetails() {
@@ -62,7 +87,7 @@ export class HomePage {
       this.topUpAmount = data.values[0];
       //console.log(this.topUpAmount);
       this.gotoPayment();
-    } else {
+    } else if (data.values[0] !== '') {
       this.presentToast();
     }
   }
@@ -96,7 +121,7 @@ export class HomePage {
 
   async presentToast() {
     const toast = await this.toastController.create({
-      message: 'Minimum payment amount is Rs. 50',
+      message: 'Minimum TopUp amount is Rs. 5',
       duration: 1500,
       position: 'top',
     });
@@ -104,17 +129,24 @@ export class HomePage {
     await toast.present();
   }
 
-  getAllGames() {
-    this.amBetsService.getAllGames().subscribe(res => {
-      if (res.data.length)
-        res.data.map((e: any, i: number) => {
-          if (!e.name) {
-            res.data.splice(i, 1);
-          }
-        })
-      this.gameList = res.data;
-      console.log(res)
-    }, err => console.log(err))
+  async getAllGames() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Getting game list...',
+    });
+
+    loading.present();
+    this.amBetsService.getAllGames()
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(res => {
+        if (res.data.length)
+          res.data.map((e: any, i: number) => {
+            if (!e.name) {
+              res.data.splice(i, 1);
+            }
+          })
+        this.gameList = res.data;
+        console.log(res)
+      }, err => console.log(err))
   }
 
   navigate(bet: any) {

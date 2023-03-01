@@ -1,7 +1,9 @@
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { AmBetsService } from './../ambets.service';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { LOCAL_STORAGE, WebStorageService } from 'ngx-webstorage-service';
+import { InfiniteScrollCustomEvent, IonInfiniteScroll } from '@ionic/angular';
 
 @Component({
   selector: 'app-my-bids',
@@ -9,15 +11,23 @@ import { LOCAL_STORAGE, WebStorageService } from 'ngx-webstorage-service';
   styleUrls: ['my-bids.page.scss'],
 })
 export class MyBidsPage {
+  @ViewChild("infiniteScroll")
+  infiniteScroll!: IonInfiniteScroll;
   gameList: any = []
   hide: boolean = true;
   user: any;
   bets: any = [];
   selectedGame: any;
-  rName: string = 'single';
-  constructor(private amBetsService: AmBetsService, @Inject(LOCAL_STORAGE) private storage: WebStorageService,) {
-    this.getAllGames();
-    this.getUserDetails();
+  rName: string = "single";
+  page: number = 0;
+  constructor(private amBetsService: AmBetsService, @Inject(LOCAL_STORAGE) private storage: WebStorageService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    activatedRoute.data.subscribe(() => {
+      this.getAllGames();
+      this.getUserDetails();
+    })
+
   }
   getAllGames() {
     this.amBetsService.getAllGames().subscribe(res => {
@@ -39,20 +49,40 @@ export class MyBidsPage {
   }
   getRadio(digit: string) {
     this.rName = digit;
+    this.page = 0;
+    this.bets = [];
     this.getBidsForUser();
   }
+
+  onIonInfinite(ev: any) {
+    this.page += 1;
+    this.getBidsForUser();
+    setTimeout(() => {
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
+  }
+
   getBidsForUser() {
-    this.amBetsService.getBetsByUserId(0, 100, this.user.id, this.selectedGame.id).subscribe(res => {
-      console.log(res)
-      this.bets = res.data;
-      this.bets.map((bet: any) => {
-        bet.Date = new Date(bet.date).toLocaleDateString()
-      })
-      this.bets.map((bet: any, i: number) => {
-        if (bet.type !== this.rName) {
-          this.bets.splice(i, 1);
-        }
-      })
+    this.amBetsService.getBetsByUserId(this.page, 10, this.user.id, this.selectedGame.id, this.rName).subscribe(res => {
+      //console.log(res, this.rName)
+      if (res.data.length > 0) {
+        res.data.map((bet: any) => {
+          bet.Date = new Date(bet.date).toLocaleDateString()
+        });
+        const filteredData = res.data.filter((bet: { type: string; }) => {
+          return bet.type == this.rName
+          //if (bet.type !== this.rName) {
+          //   this.bets.splice(i, 1);
+          // }
+        })
+        filteredData.map((each: any) => {
+          this.bets.push(each)
+        })
+        this.infiniteScroll.disabled = false;
+        //console.log(this.bets);
+      } else {
+        this.infiniteScroll.disabled = true;
+      }
     }, err => {
       console.log(err)
     })

@@ -19,6 +19,8 @@ export class WithdrawMoneyComponent implements OnInit {
   gty: any;
   enableBtn: boolean = false;
   toast: any;
+  gateWayName = '';
+  admin: any
   constructor(
     private modalCtrl: ModalController,
     private alertController: AlertController,
@@ -32,7 +34,7 @@ export class WithdrawMoneyComponent implements OnInit {
 
   ngOnInit() {
     //console.log(this.bettingList);
-
+    this.admin = this.storage.get("admin");
     if (this.bettingList) {
       this.bettingList.map((bet: { amount: number }) => {
         this.totalAmount = this.totalAmount + bet.amount;
@@ -58,11 +60,9 @@ export class WithdrawMoneyComponent implements OnInit {
       header: 'Alert',
       subHeader: 'Important message',
       message: `<ol>
-      <li>Please send money from your registered mobile no only</li>
+      <li>Send the Total Amount <b>Rs. ${this.totalAmount}</b> to <b>${this.admin.moneyNumber}</b></li>
       <br>
-      <li>Send the Total Amount <b>Rs. ${this.totalAmount}</b> to <b>7777777777</b></li>
-      <br>
-      <li>Send Money from Phone Pay,PAYTM and GPay Only</li>
+      <li>Send Money from Phone Pay and GPay Only</li>
       <br>
       <li>Once the Payment is Done Fill this Form and 'Click' on 'SUBMIT'</li>
     </ol>`,
@@ -77,7 +77,7 @@ export class WithdrawMoneyComponent implements OnInit {
     const alert = await this.alertController.create({
       header: 'Success',
       subHeader: 'Payment request sent.',
-      message: `We will update your wallet shortly. For any query contact us on <ion-icon name="logo-whatsapp"></ion-icon> 7777777777`,
+      message: `We will update your wallet shortly. For any query contact us on <ion-icon name="logo-whatsapp"></ion-icon> {{admin.wpNumber}}`,
       buttons: ['OK'],
       mode: 'ios',
     });
@@ -87,55 +87,63 @@ export class WithdrawMoneyComponent implements OnInit {
 
   async amtChnage(e: any) {
     this.amount = e.target.value;
-    if (this.amount < 50) {
-      this.presentToast("Amount can't be less than 50", 'danger', 'top');
-    } else {
-      (await this.toast).dismiss();
-    }
   }
   noChange(e: any) {
     this.no = e.target.value;
   }
   gChnage(e: any) {
+    this.gateWayName = e.target.value;
     this.no += e.target.value;
     this.enableBtn = true
   }
 
   async save() {
-    //console.log(this.no);
-    const loading = await this.loaderService.loadingCtrl.create({
-      message: 'Sending request...',
-    });
-    await loading.present();
-    const user = this.user;
-    const payload = {
-      "user": user.id,
-      "userName": user.name,
-      "userNo": this.no,
-      "amount": this.amount,
-      "balance": user.walletBalance,
-      "type": "minus"
+    if (this.amount > parseInt(this.user.walletBalance)) {
+      this.presentToast("Insufficient balance", 'dark', 'top');
+    } else if (!this.gateWayName) {
+      this.presentToast("Enter UPI gateway name", 'dark', 'top');
+    } else if (!this.no || this.no.toString().length < 10) {
+      this.presentToast("Please enter valid no", 'dark', 'top');
+    } else if (this.amount < 50) {
+      this.presentToast("Amount can't be less than 50", 'dark', 'top');
     }
-    this.amBetsService.addMoney(payload)
-      .pipe(finalize(async () => await loading.dismiss()))
-      .subscribe(res => {
-        if (res.status === "200") {
-          const newBal = parseInt(user.walletBalance) + this.totalAmount;
-          user.walletBalance = newBal;
-          localStorage.setItem('user', JSON.stringify(user));
-          setTimeout(() => {
-            this.cancel();
-            this.showConfirm();
-          }, 500);
-        }
-      }, err => { console.log(err) })
+    else {
+      //console.log(this.no);
+      const loading = await this.loaderService.loadingCtrl.create({
+        message: 'Sending request...',
+      });
+      await loading.present();
+      const user = this.user;
+      const payload = {
+        "user": user.id,
+        "userName": user.name,
+        "userNo": this.no,
+        "amount": this.amount,
+        "balance": user.walletBalance,
+        "type": "minus"
+      }
+      this.amBetsService.addMoney(payload)
+        .pipe(finalize(async () => await loading.dismiss()))
+        .subscribe(res => {
+          if (res.status === "200") {
+            const newBal = parseInt(user.walletBalance) + this.totalAmount;
+            user.walletBalance = newBal;
+            localStorage.setItem('user', JSON.stringify(user));
+            setTimeout(() => {
+              this.cancel();
+              this.showConfirm();
+            }, 500);
+          }
+        }, err => { console.log(err) })
+    }
   }
 
   async presentToast(msg: string, clr: string, position: 'top' | 'middle' | 'bottom') {
     this.toast = await this.toastController.create({
       message: msg,
       position: position,
-      color: clr
+      color: clr,
+      duration: 1500
     });
 
     await this.toast.present();

@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar class="ion-padding-end">
+    <ion-icon
+      style="font-size: 25px"
+      slot="end"
+      name="close"
+      (click)="gotoHome()"
+    ></ion-icon>
+    <ion-text style="margin-left: 20px">Game Times</ion-text>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-card *ngFor="let d of data">
+      <ion-card-header>
+        <ion-card-title>{{ d.name }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div style="display: flex; justify-content: space-between">
+          <p>Last Play Time</p>
+          <p>Result Time</p>
+        </div>
+        <div
+          style="display: flex; justify-content: space-between"
+          *ngFor="let rw of d.bazis; let i = index"
+        >
+          <ion-text color="dark">{{ rw }}</ion-text>
+          <ion-text color="dark">{{ d.results[i] }}</ion-text>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

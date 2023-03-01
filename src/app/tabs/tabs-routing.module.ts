@@ -1,3 +1,6 @@
+import { WpShareComponent } from './../wp-share/wp-share.component';
+import { GameTimesComponent } from './../game-times/game-times.component';
+import { GameRulesComponent } from './../game-rules/game-rules.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
@@ -33,6 +36,21 @@ const routes: Routes = [
           import('../profile/profile.module').then((m) => m.ProfilePageModule),
       },
       {
+        path: 'game-rules',
+        component: GameRulesComponent
+
+      },
+      {
+        path: 'game-times',
+        component: GameTimesComponent
+
+      },
+      {
+        path: 'share',
+        component: WpShareComponent
+
+      },
+      {
         path: '',
         redirectTo: '/login',
         pathMatch: 'full',
@@ -41,7 +59,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: '/true-login',
     pathMatch: 'full',
   },
 ];
@@ -49,4 +67,4 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

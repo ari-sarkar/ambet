@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar class="ion-padding-end">
+    <ion-icon
+      style="font-size: 25px"
+      slot="end"
+      name="close"
+      (click)="gotoHome()"
+    ></ion-icon>
+    <ion-text style="margin-left: 20px">Game Rules</ion-text>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-card *ngFor="let d of data">
+      <ion-card-header>
+        <ion-card-title>{{ d.name }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div *ngFor="let txt of d.descriptions">{{ txt }}</div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

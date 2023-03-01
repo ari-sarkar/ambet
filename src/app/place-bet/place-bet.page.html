@@ -27,7 +27,7 @@
     </div>
     <div id="time-wrapper">
       <ion-icon name="hourglass-outline"></ion-icon>
-      <ion-text class="time">1 hr 30 min</ion-text>
+      <ion-text class="time">{{time}}</ion-text>
     </div>
   </div>
 
@@ -76,7 +76,7 @@
     </div>
 
     <div id="play" *ngIf="myBetLists.length > 0">
-      <button (click)="gotoPayment()">PLAY</button>
+      <button (click)="presentAlert()">PLAY</button>
     </div>
   </div>
 </ion-content>

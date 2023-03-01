@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: '9xbet',
+  appId: 'com.bet.ambet',
+  appName: 'ambet',
   webDir: 'www',
   bundledWebRuntime: false
 };

@@ -1,3 +1,7 @@
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { WpShareComponent } from './../wp-share/wp-share.component';
+import { GameTimesComponent } from './../game-times/game-times.component';
+import { GameRulesComponent } from './../game-rules/game-rules.component';
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,6 +18,7 @@ import { TabsPage } from './tabs.page';
     FormsModule,
     TabsPageRoutingModule
   ],
-  declarations: [TabsPage]
+  declarations: [TabsPage, GameRulesComponent, GameTimesComponent, WpShareComponent],
+  providers: [SocialSharing]
 })
-export class TabsPageModule {}
+export class TabsPageModule { }

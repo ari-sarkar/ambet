@@ -10,13 +10,11 @@ import { LOCAL_STORAGE, WebStorageService } from 'ngx-webstorage-service';
 })
 export class ResultsPage {
   winningsOne: any = [];
-  winningsTwo: any = [];
-  winningsThree: any = [];
-  winningsFour: any = [];
   gameList: any = []
   hide: boolean = true;
   user: any;
   selectedGame: any;
+  date: any
   constructor(private amBetsService: AmBetsService, @Inject(LOCAL_STORAGE) private storage: WebStorageService,) {
     this.getAllGames();
     this.getUserDetails();
@@ -33,183 +31,44 @@ export class ResultsPage {
     },
       err => { console.log(err) })
   }
+
   selectGame(e: any) {
     //console.log(e.detail.value)
-    this.hide = false;
     this.selectedGame = e.detail.value;
-    const today = new Date();
-    const date = new Date().toLocaleDateString();
-    const day = today.getDate();
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear();
-    const totalDaysInMonth = this.daysInMonth(month, year);
-    console.log(totalDaysInMonth);
-    if (day > 3) {
-      //?1
-      const payload0 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: date
-      }
-      this.amBetsService.getResultByGameAndDate(payload0).subscribe(res => {
-        this.winningsOne = res.data;
-      }, err => { console.log(err) })
-      //?2
-      const payload1 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${day - 1}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload1).subscribe(res => {
-        this.winningsTwo = res.data;
-      }, err => { console.log(err) })
-      //?3
-      const payload2 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${day - 2}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload2).subscribe(res => {
-        this.winningsThree = res.data;
-      }, err => { console.log(err) })
-      //?4
-      const payload3 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${day - 3}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload3).subscribe(res => {
-        this.winningsFour = res.data;
-      }, err => { console.log(err) })
-    } else if (day === 3) {
-      //?1
-      const payload0 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: date
-      }
-      this.amBetsService.getResultByGameAndDate(payload0).subscribe(res => {
-        this.winningsOne = res.data;
-      }, err => { console.log(err) })
-      //?2
-      const payload1 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${day - 1}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload1).subscribe(res => {
-        this.winningsTwo = res.data;
-      }, err => { console.log(err) })
-      //?3
-      const payload2 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${day - 2}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload2).subscribe(res => {
-        this.winningsThree = res.data;
-      }, err => { console.log(err) })
-      //?4
-      const payload3 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${totalDaysInMonth}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload3).subscribe(res => {
-        this.winningsFour = res.data;
-      }, err => { console.log(err) })
-    } else if (day === 2) {
-      //?1
-      const payload0 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: date
-      }
-      this.amBetsService.getResultByGameAndDate(payload0).subscribe(res => {
-        this.winningsOne = res.data;
-      }, err => { console.log(err) })
-      //?2
-      const payload1 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${day - 1}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload1).subscribe(res => {
-        this.winningsTwo = res.data;
-      }, err => { console.log(err) })
-      //?3
-      const payload2 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${totalDaysInMonth}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload2).subscribe(res => {
-        this.winningsThree = res.data;
-      }, err => { console.log(err) })
-      //?4
-      const payload3 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${totalDaysInMonth - 1}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload3).subscribe(res => {
-        this.winningsFour = res.data;
-      }, err => { console.log(err) })
-    } else if (day === 1) {
-      //?1
-      const payload0 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: date
-      }
-      this.amBetsService.getResultByGameAndDate(payload0).subscribe(res => {
-        this.winningsOne = res.data;
-      }, err => { console.log(err) })
-      //?2
-      const payload1 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${totalDaysInMonth}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload1).subscribe(res => {
-        this.winningsTwo = res.data;
-      }, err => { console.log(err) })
-      //?3
-      const payload2 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${totalDaysInMonth - 1}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload2).subscribe(res => {
-        this.winningsThree = res.data;
-      }, err => { console.log(err) })
-      //?4
-      const payload3 = {
-        page: 0,
-        size: 10,
-        id: this.selectedGame.id,
-        date: `${month}/${totalDaysInMonth - 2}/${year}`
-      }
-      this.amBetsService.getResultByGameAndDate(payload3).subscribe(res => {
-        this.winningsFour = res.data;
-      }, err => { console.log(err) })
-    }
+    this.winningsOne = [];
+  }
 
+
+  dateChange(e: any) {
+    const date = new Date(e.target.value).toLocaleDateString();
+    const dateArray = date.split('/');
+    if (parseInt(dateArray[0]) > 9) {
+      if (parseInt(dateArray[1]) > 9) {
+        this.date = `${dateArray[2]}-${dateArray[0]}-${dateArray[1]}`
+      } else {
+        this.date = `${dateArray[2]}-${dateArray[0]}-0${dateArray[1]}`
+      }
+    } else {
+      if (parseInt(dateArray[1]) > 9) {
+        this.date = `${dateArray[2]}-0${dateArray[0]}-${dateArray[1]}`
+      } else {
+        this.date = `${dateArray[2]}-0${dateArray[0]}-0${dateArray[1]}`
+      }
+    }
+    console.log(this.date);
+    this.hide = false;
+    this.getResults()
+  }
+  getResults() {
+    const payload = {
+      page: 0,
+      size: 10,
+      id: this.selectedGame.id,
+      date: this.date
+    }
+    this.amBetsService.getResultByGameAndDate(payload).subscribe(res => {
+      this.winningsOne = res.data;
+    }, err => { console.log(err) })
   }
 
   daysInMonth(month: any, year: any) { // Use 1 for January, 2 for February, etc.

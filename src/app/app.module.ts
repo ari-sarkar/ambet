@@ -24,7 +24,8 @@ import { StorageServiceModule, LOCAL_STORAGE } from 'ngx-webstorage-service';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule],
+    HttpClientModule,
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, HttpClient, AmBetsService],
   bootstrap: [AppComponent],
 })

@@ -17,7 +17,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-pdding">
   <ion-list>
     <ion-item>
       <ion-select
@@ -48,18 +48,30 @@
     </ion-radio-group>
   </div>
 
-  <div *ngIf="!hide" class="my-bids heading">
-    <ion-text>Date</ion-text>
-    <ion-text>Baji</ion-text>
-    <ion-text>Number</ion-text>
-    <ion-text>Amount</ion-text>
-    <ion-text>Result</ion-text>
+  <div class="bids-wrapper" style="padding-bottom: 20px">
+    <div *ngIf="!hide" class="my-bids heading">
+      <ion-text>Date</ion-text>
+      <ion-text>Baji</ion-text>
+      <ion-text>Number</ion-text>
+      <ion-text>Amount</ion-text>
+      <ion-text>Result</ion-text>
+    </div>
+    <div class="my-bids content" *ngFor="let bet of bets">
+      <ion-text>{{bet.Date}}</ion-text>
+      <ion-text>{{bet.bajiNo}}</ion-text>
+      <ion-text>{{bet.number}}</ion-text>
+      <ion-text>₹ {{bet.amount}}</ion-text>
+      <ion-text>{{bet.result}}</ion-text>
+    </div>
   </div>
-  <div class="my-bids content" *ngFor="let bet of bets">
-    <ion-text>{{bet.Date}}</ion-text>
-    <ion-text>{{bet.bajiNo}}</ion-text>
-    <ion-text>{{bet.number}}</ion-text>
-    <ion-text>₹ {{bet.amount}}</ion-text>
-    <ion-text>{{bet.result}}</ion-text>
-  </div>
+
+  <ion-infinite-scroll
+    threshold="50px"
+    #infiniteScroll
+    (ionInfinite)="onIonInfinite($event)"
+  >
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+    ></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

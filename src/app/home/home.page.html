@@ -1,53 +1,78 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button>
-        <img src="../../assets/logo.jpg" />
-        <ion-text id="heading">Home</ion-text>
-      </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button>
-        <div id="wallet">
-          <ion-icon color="success" name="wallet"></ion-icon>
-          <ion-text>₹ {{user?.walletBalance}}</ion-text>
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{user?.name}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-item routerLink="/tabs/game-rules">
+      <ion-icon name="game-controller-outline"></ion-icon>
+      <ion-text style="margin-left: 8px">Game Rules</ion-text>
+    </ion-item>
+    <ion-item routerLink="/tabs/game-times">
+      <ion-icon name="alarm-outline"></ion-icon>
+      <ion-text style="margin-left: 8px">Game Times</ion-text>
+    </ion-item>
+    <ion-item routerLink="/tabs/share">
+      <ion-icon name="share-social-outline"></ion-icon>
+      <ion-text style="margin-left: 8px">Share App</ion-text>
+    </ion-item>
+    <ion-item (click)="logout()">
+      <ion-icon name="power-outline"></ion-icon>
+      <ion-text style="margin-left: 8px">Logout</ion-text>
+    </ion-item>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button>
+          <div id="wallet">
+            <ion-icon color="success" name="wallet"></ion-icon>
+            <ion-text>₹ {{user?.walletBalance}}</ion-text>
+          </div>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <!-- for wallet -->
+    <div id="wallet-wrapper">
+      <div class="wallet-controller" (click)="presentAlert()">
+        <div class="img-icon-wrapper">
+          <img src="../../assets/hand-wallet.jpg" />
+          <ion-icon color="success" name="add-outline"></ion-icon>
         </div>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+        <ion-text>Add Money</ion-text>
+      </div>
+      <div class="wallet-divider"></div>
+      <div class="wallet-controller" (click)="gotoWithdraw()">
+        <div class="img-icon-wrapper">
+          <img src="../../assets/hand-wallet.jpg" />
+          <ion-icon color="danger" name="remove-outline"></ion-icon>
+        </div>
+        <ion-text>Withdraw Money</ion-text>
+      </div>
+    </div>
+    <!--? for wallet -->
 
-<ion-content [fullscreen]="true">
-  <!-- for wallet -->
-  <div id="wallet-wrapper">
-    <div class="wallet-controller" (click)="presentAlert()">
-      <div class="img-icon-wrapper">
-        <img src="../../assets/hand-wallet.jpg" />
-        <ion-icon color="success" name="add-outline"></ion-icon>
-      </div>
-      <ion-text>Add Money</ion-text>
-    </div>
-    <div class="wallet-divider"></div>
-    <div class="wallet-controller" (click)="gotoWithdraw()">
-      <div class="img-icon-wrapper">
-        <img src="../../assets/hand-wallet.jpg" />
-        <ion-icon color="danger" name="remove-outline"></ion-icon>
-      </div>
-      <ion-text>Withdraw Money</ion-text>
-    </div>
-  </div>
-  <!--? for wallet -->
-
-  <div id="list-of-bets">
-    <div class="bet-card-container" *ngFor="let bet of gameList">
-      <div class="bet-img-wrapper">
-        <img [src]="bet.imageUrl" />
-        <ion-text>{{bet.name}}</ion-text>
-      </div>
-      <div (click)="navigate(bet)" class="play-btn">
-        <ion-text>Play Now</ion-text>
-        <ion-icon color="dark" name="chevron-forward-circle"></ion-icon>
+    <div id="list-of-bets">
+      <div class="bet-card-container" *ngFor="let bet of gameList">
+        <div class="bet-img-wrapper">
+          <img [src]="bet.imageUrl" />
+          <ion-text>{{bet.name}}</ion-text>
+        </div>
+        <div (click)="navigate(bet)" class="play-btn">
+          <ion-text>Play Now</ion-text>
+          <ion-icon color="dark" name="chevron-forward-circle"></ion-icon>
+        </div>
       </div>
     </div>
-  </div>
-</ion-content>
+  </ion-content>
+</div>

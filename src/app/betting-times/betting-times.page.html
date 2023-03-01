@@ -3,7 +3,7 @@
     <ion-button routerLink="/tabs/home" slot="start" fill="clear" color="dark">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-button>
-    <ion-title>Kolkata FataFat</ion-title>
+    <ion-title>{{gameName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,8 +15,14 @@
       <ion-text class="name">{{bet.name}}</ion-text>
       <div class="time">
         <ion-icon name="time-outline"></ion-icon>
-        <ion-text>{{bet.startTime}} - </ion-text>
-        <ion-text>{{ bet.endTime}}</ion-text>
+        <ion-text
+          >{{bet.startHour > 12 ? bet.startHour - 12 :
+          bet.startHour}}:{{bet.startMin > 0 ? bet.startMin : '00'}} -
+        </ion-text>
+        <ion-text
+          >{{bet.endHour > 12 ? bet.endHour -12 : bet.endHour}}:{{bet.endMin > 0
+          ? bet.endMin : '00'}}</ion-text
+        >
       </div>
       <div
         class="play-btn"

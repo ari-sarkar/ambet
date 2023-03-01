@@ -30,6 +30,10 @@
         >
       </ion-select>
     </ion-item>
+    <ion-datetime
+      (ionChange)="dateChange($event)"
+      presentation="date"
+    ></ion-datetime>
   </ion-list>
   <div *ngIf="!hide" class="play-history">
     <ion-text>Winning Numbers</ion-text>
